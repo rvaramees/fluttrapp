@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "832632944780",
+    "project_id": "paediatric-dental-app-6b4c3",
+    "storage_bucket": "paediatric-dental-app-6b4c3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832632944780:android:6a58c7053e2777b17163a9",
+        "android_client_info": {
+          "package_name": "com.example.fluttr_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnW6J8IIsVv6zGbNo30XCI5e3xWWcSBRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
