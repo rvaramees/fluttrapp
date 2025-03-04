@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fluttr_app/pages/start_brushing.dart';
 import 'package:fluttr_app/pages/daily_challenges.dart';
-import 'package:fluttr_app/pages/track_Progress.dart';
+import 'package:fluttr_app/pages/track_progress.dart';
 import 'package:fluttr_app/pages/edu_videos.dart';
 
 class Home extends StatefulWidget {

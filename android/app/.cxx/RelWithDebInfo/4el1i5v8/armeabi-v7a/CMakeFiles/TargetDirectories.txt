@@ -1,0 +1,2 @@
+C:/Users/rvara/StudioProjects/fluttr_app/android/app/.cxx/RelWithDebInfo/4el1i5v8/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/rvara/StudioProjects/fluttr_app/android/app/.cxx/RelWithDebInfo/4el1i5v8/armeabi-v7a/CMakeFiles/rebuild_cache.dir
