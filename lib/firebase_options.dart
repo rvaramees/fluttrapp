@@ -58,6 +58,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '832632944780',
     projectId: 'paediatric-dental-app-6b4c3',
     storageBucket: 'paediatric-dental-app-6b4c3.firebasestorage.app',
+    androidClientId: '832632944780-vecaknkl65tllvm41utgi5ka1pjot38a.apps.googleusercontent.com',
+    iosClientId: '832632944780-o9cg7vr3sqf24je1su7lostchcvdfsjv.apps.googleusercontent.com',
     iosBundleId: 'com.example.fluttrApp',
   );
+
 }
