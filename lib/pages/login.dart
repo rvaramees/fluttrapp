@@ -81,19 +81,18 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: _goToSignup,
                   child: Text('Signup'),
                 ),
-                ElevatedButton(onPressed: _signOut, child: Text('Signout')),
               ],
             ),
           ),
         ));
   }
 
-  void _signOut() {
-    _auth.signout();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Signed out successfully')),
-    );
-  }
+  // void _signOut() {
+  //   _auth.signout();
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text('Signed out successfully')),
+  //   );
+  // }
 
   void _goToSignup() {
     Navigator.push(

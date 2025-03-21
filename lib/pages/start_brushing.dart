@@ -133,11 +133,9 @@ class _StartBrushingPageState extends State<StartBrushingPage> {
     Map<String, Map<String, bool>> records = {};
 
     QuerySnapshot brushingSnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.userId)
-        .collection('children')
+        .collection('brushes')
         .doc(childId)
-        .collection('brushingRecords')
+        .collection('records')
         .where(FieldPath.documentId, isGreaterThanOrEqualTo: monthYear)
         .get();
     print('brushingRecord Collected!');
@@ -192,29 +190,29 @@ class _StartBrushingPageState extends State<StartBrushingPage> {
                     },
                   ),
                 ),
-                if (isBrushingTime)
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        backgroundColor: const Color.fromARGB(255, 8, 237, 122),
+                // if (isBrushingTime)
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      onPressed: () {
-                        bool isMorning = DateTime.now().hour < 12;
-                        goToBrusher(context, isMorning);
-                      },
-                      child: Text(
-                        "Brush",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                      backgroundColor: const Color.fromARGB(255, 8, 237, 122),
+                    ),
+                    onPressed: () {
+                      bool isMorning = DateTime.now().hour < 12;
+                      goToBrusher(context, isMorning);
+                    },
+                    child: Text(
+                      "Brush",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
+                ),
               ],
             ),
     );

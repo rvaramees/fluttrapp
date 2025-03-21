@@ -49,77 +49,6 @@ class NotiServices {
         AndroidFlutterLocalNotificationsPlugin>();
 
     _isInitialized = true;
-
-    //   // Handle foreground messages
-    //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //     RemoteNotification? notification = message.notification;
-    //     AndroidNotification? android = message.notification?.android;
-
-    //     if (notification != null && android != null) {
-    //       flutterLocalNotificationsPlugin.show(
-    //         notification.hashCode,
-    //         notification.title,
-    //         notification.body,
-    //         NotificationDetails(
-    //           android: AndroidNotificationDetails(
-    //             'channel_id',
-    //             'channel_name',
-    //             channelDescription: 'channel_description',
-    //             importance: Importance.max,
-    //             priority: Priority.high,
-    //           ),
-    //         ),
-    //       );
-    //     }
-    //   });
-    // }
-
-    // // Notification detail setup
-    // NotificationDetails notificationDetails() {
-    //   return const NotificationDetails(
-    //     android: AndroidNotificationDetails(
-    //       'daily_channel_id',
-    //       'Daily Notification',
-    //       channelDescription: 'Daily Notification',
-    //       importance: Importance.max,
-    //       priority: Priority.high,
-    //     ),
-    //     iOS: DarwinNotificationDetails(),
-    //   );
-    // }
-
-    // // Show Notification
-    // Future<void> showNotification({
-    //   int id = 0,
-    //   String? title,
-    //   String? body,
-    // }) async {
-    //   return flutterLocalNotificationsPlugin.show(
-    //     id,
-    //     title,
-    //     body,
-    //     notificationDetails(),
-    //   );
-    // }
-
-    // // Show Scheduled Notification
-    // Future<void> showScheduledNotification({
-    //   required int id,
-    //   required String title,
-    //   required String body,
-    //   required tz.TZDateTime scheduledTime,
-    // }) async {
-    //   return flutterLocalNotificationsPlugin.zonedSchedule(
-    //     id,
-    //     title,
-    //     body,
-    //     scheduledTime,
-    //     notificationDetails(),
-    //     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    //     matchDateTimeComponents: DateTimeComponents.time, // Repeat daily
-    //     uiLocalNotificationDateInterpretation:
-    //         UILocalNotificationDateInterpretation.absoluteTime,
-    //   );
   }
 
   // Show Instant Notification
@@ -138,13 +67,15 @@ class NotiServices {
         0, title, body, platformChannelSpecifics);
   }
 
+  
+
   // Show Scheduled Notification
-  static Future<void> scheduledNotification(
-      String title, String body, tz.TZDateTime scheduledDate) async {
+  static Future<void> scheduledNotification(int id, String habit,
+      String description, tz.TZDateTime scheduledDate) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      title,
-      body,
+      id,
+      habit,
+      description,
       scheduledDate,
       const NotificationDetails(
         android: AndroidNotificationDetails(
@@ -160,34 +91,4 @@ class NotiServices {
           UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
-
-  // Future<void> showScheduledNotification({
-  //   required int id,
-  //   required String title,
-  //   required String body,
-  //   required tz.TZDateTime scheduledTime,
-  //   required DateTimeComponents matchDateTimeComponents,
-  // }) async {
-  //   const NotificationDetails platformChannelSpecifics = NotificationDetails(
-  //     android: AndroidNotificationDetails(
-  //       "channel_Id",
-  //       "channel_Name",
-  //       importance: Importance.high,
-  //       priority: Priority.high,
-  //     ),
-  //     iOS: DarwinNotificationDetails(),
-  //   );
-
-  //   return flutterLocalNotificationsPlugin.zonedSchedule(
-  //     id,
-  //     title,
-  //     body,
-  //     scheduledTime,
-  //     platformChannelSpecifics,
-  //     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-  //     matchDateTimeComponents: matchDateTimeComponents, // Repeat daily
-  //     uiLocalNotificationDateInterpretation:
-  //         UILocalNotificationDateInterpretation.absoluteTime,
-  //   );
-  // }
 }
