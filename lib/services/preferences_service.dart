@@ -14,12 +14,7 @@ class PreferencesService {
     required bool reminderEnabled,
   }) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(parentId)
-          .collection('children')
-          .doc(childId)
-          .update({
+      await _firestore.collection('children').doc(childId).update({
         'preferences': {
           'morningTime': morningTime,
           'eveningTime': eveningTime,
@@ -36,7 +31,7 @@ class PreferencesService {
 
   void _showScheduledNotification(
       int id, String habit, String description, String timeString) {
-    print("$timeString"); // Debugging log
+    print(timeString); // Debugging log
     tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
     final now = tz.TZDateTime.now(tz.local);
     print(now); // Debugging log
@@ -92,16 +87,10 @@ class PreferencesService {
     return scheduledDate;
   }
 
-  Future<Map<String, dynamic>?> getBrushingPreferences(
-      String? parentId, String? childId) async {
+  Future<Map<String, dynamic>?> getBrushingPreferences(String? childId) async {
     try {
-      DocumentSnapshot doc = await _firestore
-          .collection('users')
-          .doc(parentId)
-          .collection('children')
-          .doc(childId)
-          .get();
-      print(parentId);
+      DocumentSnapshot doc =
+          await _firestore.collection('children').doc(childId).get();
       print(childId);
 
       if (doc.exists && doc.data() != null) {

@@ -1,27 +1,33 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class ToothbrushAnimation extends StatefulWidget {
+  const ToothbrushAnimation({super.key});
+
   @override
-  _ToothbrushAnimationState createState() => _ToothbrushAnimationState();
+  ToothbrushAnimationState createState() => ToothbrushAnimationState();
 }
 
-class _ToothbrushAnimationState extends State<ToothbrushAnimation>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
+class ToothbrushAnimationState extends State<ToothbrushAnimation>
+    with TickerProviderStateMixin {
+  late AnimationController _frontTeethController; // Default animation
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+
+    _frontTeethController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 3), // Speed control for front
     )..repeat();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _frontTeethController.dispose();
     super.dispose();
   }
 
@@ -29,9 +35,9 @@ class _ToothbrushAnimationState extends State<ToothbrushAnimation>
   Widget build(BuildContext context) {
     return Center(
       child: AnimatedBuilder(
-        animation: _controller,
+        animation: _frontTeethController,
         builder: (context, child) {
-          double angle = _controller.value * 2 * pi;
+          double angle = _frontTeethController.value * 2 * pi;
           double radius = 15;
 
           return Transform.translate(
@@ -49,39 +55,4 @@ class _ToothbrushAnimationState extends State<ToothbrushAnimation>
       ),
     );
   }
-}
-
-// class ToothbrushPainter extends CustomPainter {
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     Paint brush = Paint()
-//       ..color = Colors.blue
-//       ..strokeWidth = 6
-//       ..strokeCap = StrokeCap.round;
-
-//     // Handle
-//     canvas.drawLine(Offset(size.width / 2 - 10, size.height / 2),
-//         Offset(size.width / 2 + 30, size.height / 2), brush);
-
-//     // Bristles
-//     Paint bristles = Paint()
-//       ..color = Colors.white
-//       ..strokeWidth = 8
-//       ..strokeCap = StrokeCap.square;
-
-//     canvas.drawLine(Offset(size.width / 2 + 30, size.height / 2),
-//         Offset(size.width / 2 + 30, size.height / 2 + 5), bristles);
-//   }
-
-//   @override
-//   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-// }
-
-void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
-      backgroundColor: Colors.blue.shade100,
-      body: ToothbrushAnimation(),
-    ),
-  ));
 }

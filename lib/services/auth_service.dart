@@ -50,7 +50,7 @@ class AuthService {
       );
 
       // Save user session
-      await _saveUserSession(userCredential.user!.uid);
+      await _saveUserSession(userCredential.user!.uid, password);
       print("Successfully logged in: ${userCredential.user!.uid}");
       return userCredential.user;
     } catch (e) {
@@ -60,9 +60,10 @@ class AuthService {
   }
 
   // ✅ Save session (User ID)
-  Future<void> _saveUserSession(String userId) async {
+  Future<void> _saveUserSession(String userId, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('parentId', userId);
+    await prefs.setString('password', password);
   }
 
   // ✅ Get session (Check if user is logged in)
@@ -78,6 +79,7 @@ class AuthService {
     // Clear session
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('parentId');
+    await prefs.remove('childId');
     print("Successfully logged out");
 
     // Get.to(() => main());

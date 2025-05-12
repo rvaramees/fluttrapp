@@ -11,6 +11,8 @@ class FirestoreService {
       FirebaseFirestore.instance.collection('habits');
   final CollectionReference brushes =
       FirebaseFirestore.instance.collection('brushes');
+  final CollectionReference children =
+      FirebaseFirestore.instance.collection('children');
 
   final NotiServices notiServices = NotiServices();
 
@@ -29,46 +31,55 @@ class FirestoreService {
     String? lastBrushingDate = prefs.getString('last_brushing_date');
     String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
+    print("📅 Checking brushing record for today...");
+    print("   - Last brushing date: $lastBrushingDate");
+    print("   - Today's date: $today");
+    print("   - Child ID: $childId");
+
     if (lastBrushingDate != today) {
-      // Ensure child document exists
-      DocumentReference childDocRef = brushes.doc(childId);
+      DocumentReference childDocRef =
+          FirebaseFirestore.instance.collection('brushes').doc(childId);
 
-      // Create a new brushing record for today
-      await childDocRef.collection('records').doc(today).set({
-        'morning': false,
-        'evening': false,
-      });
+      try {
+        await childDocRef.collection('records').doc(today).set({
+          'morning': false,
+          'evening': false,
+        }, SetOptions(merge: true));
 
-      // Update last stored date
-      await prefs.setString('last_brushing_date', today);
+        await prefs.setString('last_brushing_date', today);
+        print("✅ Successfully created brushing record for $today");
+      } catch (e) {
+        print("❌ Error creating brushing record: $e");
+      }
+    } else {
+      print("⚠️ Brushing record already exists for today.");
     }
   }
 
   // ✅ Add Child under Parent's UID
-  Future<String> addChild(String parentUid, String childName, int age,
-      String picturePassword) async {
-    DocumentReference brushesRef = brushes.doc('childId');
-    DocumentReference childRef = await users
-        .doc(parentUid)
-        .collection('children') // Store children under parent UID
-        .add({
-      'name': childName,
-      'age': age,
-      'picturePassword':
-          picturePassword, // Store hashed image data // Empty initially
-      'timestamp': Timestamp.now(),
-    });
+  // Future<String> addChild(String parentUid, String childName, int age,
+  //     String picturePassword) async {
+  //   DocumentReference brushesRef = brushes.doc('childId');
+  //   DocumentReference childRef = await users
+  //       .doc(parentUid)
+  //       .collection('children') // Store children under parent UID
+  //       .add({
+  //     'name': childName,
+  //     'age': age,
+  //     'picturePassword':
+  //         picturePassword, // Store hashed image data // Empty initially
+  //     'timestamp': Timestamp.now(),
+  //   });
 
-    // ✅ Initialize Brushing Records for the Child
-    await initializeBrushingRecord(parentUid, childRef.id);
-    String childId = childRef.id;
-    print("Added child:  $childId ");
-    return childRef.id;
-  }
+  //   // ✅ Initialize Brushing Records for the Child
+  //   await initializeBrushingRecord(childRef.id);
+  //   String childId = childRef.id;
+  //   print("Added child:  $childId ");
+  //   return childRef.id;
+  // }
 
   // ✅ Initialize Brushing Records for a Child
-  Future<void> initializeBrushingRecord(
-      String parentUid, String childId) async {
+  Future<void> initializeBrushingRecord(String childId) async {
     String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     DocumentReference recordRef =
@@ -81,17 +92,11 @@ class FirestoreService {
         'morning': false,
         'evening': false,
       }, SetOptions(merge: true));
-      await users
-          .doc(parentUid)
-          .collection('children')
-          .doc(childId)
-          .set({'brushes': brushes.doc(childId).path}, SetOptions(merge: true));
     }
   }
 
   // ✅ Update Brushing Record for Child
-  Future<void> updateBrushingRecord(
-      String parentUid, String childId, String timeOfDay) async {
+  Future<void> updateBrushingRecord(String childId, String timeOfDay) async {
     String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
     await brushes.doc(childId).collection('records').doc(today).set({
@@ -99,20 +104,34 @@ class FirestoreService {
     }, SetOptions(merge: true));
   }
 
+  Future<Map<String, dynamic>?> getDailyProgress(String childId) async {
+    String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    DocumentSnapshot doc =
+        await brushes.doc(childId).collection('records').doc(today).get();
+    return doc.data() as Map<String, dynamic>?;
+  }
+
   // ✅ Get Parent's Children
   Stream<QuerySnapshot> getChildrenStream(String parentUid) {
     return users.doc(parentUid).collection('children').snapshots();
   }
 
+  Future<bool> isBrushingDone(String childId) {
+    String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    return brushes.doc(childId).collection('records').doc(today).get().then(
+          (doc) => doc.exists,
+        );
+  }
+
 // collection
-  Future<void> addHabit(String parentUid, String childId, String habit,
+  Future<void> addHabit(String childId, String habit,
       String time, String description) async {
     // Get the child's reference and store it if it doesn't exist
     DocumentReference habitRef = habits
         .doc(childId); // Create a document for the child in habits collection
 
     // Ensure the child doc has a reference to this habit collection
-    await users.doc(parentUid).collection('children').doc(childId).set({
+    await children.doc(childId).set({
       'habitsRef': habitRef.path, // Save reference to the habits collection
     }, SetOptions(merge: true));
     // Add the habit to the child's independent habit subcollection
@@ -128,7 +147,7 @@ class FirestoreService {
 
   void _showScheduledNotification(
       int id, String habit, String description, String timeString) {
-    print("$timeString"); // Debugging log
+    print(timeString); // Debugging log
     tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
     final now = tz.TZDateTime.now(tz.local);
     print(now); // Debugging log
@@ -204,8 +223,64 @@ class FirestoreService {
     });
   }
 
+  Future<void> updateHabitDone(String childId, String habitId, bool done) {
+    return habits.doc(childId).collection('habitRecords').doc(habitId).update({
+      'done': done,
+    });
+  }
+
   // ✅ Delete Habit
   Future<void> deleteHabit(String childId, String habitId) {
     return habits.doc(childId).collection('habitRecords').doc(habitId).delete();
+  }
+
+  void updateExp(String childId) {
+    // Update the level of the child in the Firestore database
+    children.doc(childId).update({
+      'exp': FieldValue.increment(100),
+    });
+    print("Updated exp for child: $childId");
+  }
+
+  Future<void> updateLevel(String childId) async {
+    int exp = await children.doc(childId).get().then((value) => value['exp']);
+    int level =
+        await children.doc(childId).get().then((value) => value['level']);
+    print("level: $level");
+    print("exp: $exp");
+    if (exp >= 1000) {
+      level = level + 1;
+      exp = exp - 1000;
+      // Update the level of the child in the Firestore database
+      children.doc(childId).update({
+        'level': level,
+        'exp': exp,
+      });
+      print("Updated level for child: $childId");
+    }
+  }
+
+  Future<String> getChildName(String userId, String childId) async {
+    String name =
+        await children.doc(childId).get().then((value) => value['name']);
+    print("child name: $name");
+    return name;
+  }
+
+  Future<String> getParentName(String userId) async {
+    String name = await users.doc(userId).get().then((value) => value['name']);
+    print("parent name: $name");
+    return name;
+  }
+
+  Future<int> getLevel(String childId) async {
+    int level =
+        await children.doc(childId).get().then((value) => value['level']);
+    print("level: $level");
+    return level;
+  }
+
+  getExp(String childId) {
+    return children.doc(childId).get().then((value) => value['exp']);
   }
 }
