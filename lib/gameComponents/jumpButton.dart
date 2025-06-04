@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:brighter_bites/presentation/pages/pixel.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:fluttr_app/presentation/pages/pixel.dart';
 
 class JumpButton extends SpriteComponent
     with HasGameRef<PixelGame>, TapCallbacks {

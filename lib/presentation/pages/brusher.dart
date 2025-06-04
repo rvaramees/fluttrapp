@@ -1,27 +1,22 @@
-import 'dart:io';
 
+import 'package:brighter_bites/animation/left_side_brush.dart';
+import 'package:brighter_bites/animation/rotating_brush.dart';
+import 'package:brighter_bites/core/di/injection_container.dart';
+import 'package:brighter_bites/presentation/bloc/selected_child/selected_child_bloc.dart';
+import 'package:brighter_bites/presentation/widgets/horiscrolling.dart';
+import 'package:brighter_bites/services/firestore.dart';
+import 'package:brighter_bites/services/preferences_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/animation/left_side_brush.dart';
-import 'package:fluttr_app/core/di/injection_container.dart';
-import 'package:fluttr_app/presentation/bloc/selected_child/selected_child_bloc.dart';
-import 'package:fluttr_app/services/auth_service.dart';
-import 'package:fluttr_app/presentation/widgets/horiscrolling.dart';
-import 'package:fluttr_app/services/preferences_service.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:fluttr_app/services/firestore.dart';
-import 'package:lottie/lottie.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:fluttr_app/animation/rotating_brush.dart';
 // import 'package:fluttr_app/services/face_detection_service.dart';
 // import 'package:fluttr_app/services/face_painter.dart';
 
 import 'dart:async';
 
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Brusher extends StatefulWidget {
   final String sessionType;
@@ -65,7 +60,7 @@ class _BrusherState extends State<Brusher> {
         sl<SelectedChildBloc>(); // Access the bloc using GetIt
     if (selectedChildBloc.state is ChildSelected) {
       final selectedChildId =
-          await (selectedChildBloc.state as ChildSelected).child.childId;
+          (selectedChildBloc.state as ChildSelected).child.childId;
       print('The childId is: $selectedChildId');
       setState(() {
         _childId = selectedChildId;

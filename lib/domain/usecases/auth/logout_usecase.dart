@@ -1,7 +1,7 @@
+import 'package:brighter_bites/core/error/failure.dart';
+import 'package:brighter_bites/core/usecases/usecase.dart';
+import 'package:brighter_bites/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttr_app/core/error/failure.dart';
-import 'package:fluttr_app/core/usecases/usecase.dart';
-import 'package:fluttr_app/domain/repositories/auth_repository.dart';
 
 class LogoutUseCase implements Usecase<void, NoParams> {
   final AuthRepository repository;

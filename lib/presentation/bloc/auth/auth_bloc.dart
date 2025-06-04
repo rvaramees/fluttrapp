@@ -1,13 +1,11 @@
+import 'package:brighter_bites/core/usecases/usecase.dart';
+import 'package:brighter_bites/domain/entities/user.dart';
+import 'package:brighter_bites/domain/usecases/auth/get_current_user.dart';
+import 'package:brighter_bites/domain/usecases/auth/login_usecase.dart';
+import 'package:brighter_bites/domain/usecases/auth/logout_usecase.dart';
+import 'package:brighter_bites/domain/usecases/auth/signup_usecase.dart';
 import 'package:equatable/equatable.dart';
-// import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter/material.dart';
-import 'package:fluttr_app/core/usecases/usecase.dart';
-import 'package:fluttr_app/domain/entities/user.dart';
-import 'package:fluttr_app/domain/usecases/auth/get_current_user.dart';
-import 'package:fluttr_app/domain/usecases/auth/login_usecase.dart';
-import 'package:fluttr_app/domain/usecases/auth/logout_usecase.dart';
-import 'package:fluttr_app/domain/usecases/auth/signup_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

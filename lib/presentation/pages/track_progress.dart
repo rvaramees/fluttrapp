@@ -1,13 +1,10 @@
-import 'dart:math';
 
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/presentation/bloc/selected_child/selected_child_bloc.dart';
+import 'package:brighter_bites/services/firestore.dart';
+import 'package:brighter_bites/services/noti_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/presentation/bloc/child/child_bloc.dart';
-import 'package:fluttr_app/presentation/bloc/selected_child/selected_child_bloc.dart';
-import 'package:fluttr_app/services/firestore.dart';
-import 'package:fluttr_app/services/noti_services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 class TrackProgress extends StatefulWidget {

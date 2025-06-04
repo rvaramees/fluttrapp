@@ -7,7 +7,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Fluttr App</string>
+		<string>Brighter Bites</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -32,7 +32,7 @@
 		<string>Main</string>
 		<key>UIBackgroundModes</key>
 		<array>
-    	<string>fetch</string>
+			<string>fetch</string>
 		</array>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>

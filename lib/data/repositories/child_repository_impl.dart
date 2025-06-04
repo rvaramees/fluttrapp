@@ -1,9 +1,9 @@
+import 'package:brighter_bites/core/error/failure.dart';
+import 'package:brighter_bites/data/datasources/child_remote_data_source.dart';
+import 'package:brighter_bites/data/models/child_model.dart';
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/domain/repositories/child_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttr_app/core/error/failure.dart';
-import 'package:fluttr_app/data/datasources/child_remote_data_source.dart';
-import 'package:fluttr_app/data/models/child_model.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/domain/repositories/child_repository.dart';
 
 class ChildRepositoryImpl implements ChildRepository {
   final ChildRemoteDataSource remoteDataSource;

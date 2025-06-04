@@ -9,14 +9,14 @@ class SpriteSheetAnimation extends StatefulWidget {
   final double height;
 
   const SpriteSheetAnimation({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.frameCount,
     required this.framesPerRow,
     required this.frameDuration,
     this.width = 50,
     this.height = 50,
-  }) : super(key: key);
+  });
 
   @override
   _SpriteSheetAnimationState createState() => _SpriteSheetAnimationState();

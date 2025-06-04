@@ -1,6 +1,6 @@
+import 'package:brighter_bites/core/error/failure.dart';
+import 'package:brighter_bites/domain/entities/user.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttr_app/core/error/failure.dart';
-import 'package:fluttr_app/domain/entities/user.dart';
 
 abstract interface class AuthRepository {
   Future<Either<Failure, User>> signUpWithEmailPassord(

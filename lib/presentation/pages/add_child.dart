@@ -1,14 +1,14 @@
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/presentation/bloc/auth/auth_bloc.dart';
+import 'package:brighter_bites/presentation/bloc/child/child_bloc.dart';
+import 'package:brighter_bites/presentation/widgets/loading.dart';
+import 'package:brighter_bites/services/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/presentation/bloc/auth/auth_bloc.dart';
-import 'package:fluttr_app/presentation/bloc/child/child_bloc.dart';
-import 'package:fluttr_app/presentation/widgets/loading.dart';
-import 'package:fluttr_app/services/firestore.dart';
 import 'package:uuid/uuid.dart';
 
 class AddChildScreen extends StatefulWidget {
-  const AddChildScreen({Key? key}) : super(key: key);
+  const AddChildScreen({super.key});
 
   @override
   State<AddChildScreen> createState() => _AddChildState();

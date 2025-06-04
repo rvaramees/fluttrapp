@@ -1,17 +1,14 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:brighter_bites/gameComponents/checkpoint.dart';
+import 'package:brighter_bites/gameComponents/collision_block.dart';
+import 'package:brighter_bites/gameComponents/customHitbox.dart';
+import 'package:brighter_bites/gameComponents/fruit.dart';
+import 'package:brighter_bites/gameComponents/utils.dart';
+import 'package:brighter_bites/presentation/pages/pixel.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttr_app/gameComponents/checkpoint.dart';
-import 'package:fluttr_app/gameComponents/collision_block.dart';
-import 'package:fluttr_app/gameComponents/customHitbox.dart';
-import 'package:fluttr_app/gameComponents/fruit.dart';
-import 'package:fluttr_app/gameComponents/utils.dart';
-import 'package:fluttr_app/presentation/pages/pixel.dart';
 
 enum PlayerState { idle, running, jumping, falling }
 

@@ -1,11 +1,10 @@
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/presentation/bloc/selected_child/selected_child_bloc.dart';
+import 'package:brighter_bites/presentation/pages/my_game.dart';
+import 'package:brighter_bites/presentation/widgets/horiscrolling.dart';
+import 'package:brighter_bites/services/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/presentation/bloc/selected_child/selected_child_bloc.dart';
-// import 'package:flame/game.dart';
-import 'package:fluttr_app/presentation/pages/my_game.dart';
-import 'package:fluttr_app/presentation/widgets/horiscrolling.dart';
-import 'package:fluttr_app/services/firestore.dart';
 
 // ignore: must_be_immutable
 class DailyChallenges extends StatefulWidget {

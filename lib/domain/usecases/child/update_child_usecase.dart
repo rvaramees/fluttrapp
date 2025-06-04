@@ -1,7 +1,7 @@
+import 'package:brighter_bites/core/error/failure.dart';
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/domain/repositories/child_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttr_app/core/error/failure.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/domain/repositories/child_repository.dart';
 
 class UpdateChildUseCase {
   final ChildRepository rep;

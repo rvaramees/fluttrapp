@@ -1,8 +1,8 @@
+import 'package:brighter_bites/core/error/failure.dart';
+import 'package:brighter_bites/data/datasources/auth_remote_data_source.dart';
+import 'package:brighter_bites/domain/entities/user.dart';
+import 'package:brighter_bites/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttr_app/core/error/failure.dart';
-import 'package:fluttr_app/data/datasources/auth_remote_data_source.dart';
-import 'package:fluttr_app/domain/entities/user.dart';
-import 'package:fluttr_app/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;

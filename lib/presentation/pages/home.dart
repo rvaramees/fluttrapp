@@ -1,21 +1,16 @@
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/presentation/bloc/selected_child/selected_child_bloc.dart';
+import 'package:brighter_bites/presentation/pages/daily_challenges.dart';
+import 'package:brighter_bites/presentation/pages/edu_videos.dart';
+import 'package:brighter_bites/presentation/pages/login.dart';
+import 'package:brighter_bites/presentation/widgets/custom_card.dart';
+import 'package:brighter_bites/presentation/widgets/loading.dart';
+import 'package:brighter_bites/presentation/widgets/scrolling_background.dart';
+import 'package:brighter_bites/services/auth_service.dart';
+import 'package:brighter_bites/services/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/domain/usecases/child/get_child_usecase.dart';
-import 'package:fluttr_app/presentation/bloc/selected_child/selected_child_bloc.dart';
-import 'package:fluttr_app/presentation/widgets/loading.dart';
-import 'package:fluttr_app/services/firestore.dart';
-import 'package:fluttr_app/presentation/widgets/scrolling_background.dart';
-// import 'package:fluttr_app/main.dart';
 import 'package:get/get.dart';
-import 'package:fluttr_app/presentation/pages/start_brushing.dart';
-import 'package:fluttr_app/presentation/pages/daily_challenges.dart';
-import 'package:fluttr_app/presentation/pages/track_progress.dart';
-import 'package:fluttr_app/presentation/pages/edu_videos.dart';
-import 'package:fluttr_app/services/auth_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttr_app/presentation/widgets/custom_card.dart';
-import 'package:fluttr_app/presentation/pages/login.dart'; // Import the Login class
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -59,7 +54,7 @@ class _HomeState extends State<Home> {
       print("No child selected");
       return;
     }
-    print('${child.name}');
+    print(child.name);
     await _firestoreService.updateLevel(child.childId);
     level = await _firestoreService.getLevel(child.childId);
     exp = await _firestoreService.getExp(child.childId);
@@ -131,6 +126,11 @@ class _HomeState extends State<Home> {
                               shrinkWrap: true,
                               mainAxisSpacing: 20,
                               children: [
+                                // Lottie.asset(
+                                //   'assets/animations/LevelUpAnimation.json',
+                                //   width: 200,
+                                //   height: 200,
+                                // ),
                                 _buildMenuButton(
                                   icon: Icons.brush,
                                   label: "Start Brushing",

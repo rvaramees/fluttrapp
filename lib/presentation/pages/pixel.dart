@@ -1,15 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:brighter_bites/gameComponents/jumpButton.dart';
+import 'package:brighter_bites/gameComponents/level.dart';
+import 'package:brighter_bites/gameComponents/player.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttr_app/gameComponents/jumpButton.dart';
-import 'package:fluttr_app/gameComponents/player.dart';
-import 'package:fluttr_app/gameComponents/level.dart';
 
 class PixelGame extends FlameGame with DragCallbacks, HasCollisionDetection {
   @override

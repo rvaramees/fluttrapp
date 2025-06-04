@@ -1,12 +1,13 @@
+import 'package:brighter_bites/core/error/failure.dart';
+import 'package:brighter_bites/core/usecases/usecase.dart';
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/domain/repositories/child_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttr_app/core/error/failure.dart';
-import 'package:fluttr_app/core/usecases/usecase.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/domain/repositories/child_repository.dart';
 
 class GetChildUseCase implements Usecase<Child, GetChildParams> {
   final ChildRepository rep;
   GetChildUseCase(this.rep);
+  @override
   Future<Either<Failure, Child>> call(GetChildParams params) async {
     return await rep.getChild(params.childId);
   }

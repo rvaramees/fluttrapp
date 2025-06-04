@@ -19,7 +19,7 @@ package="com.example.fluttr_app">
 
 
     <application
-        android:label="fluttr_app"
+        android:label="brighter_bites"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />

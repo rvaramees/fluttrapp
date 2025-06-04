@@ -1,10 +1,8 @@
 // import "package:fluttr_app/pages/home.dart";
+import "package:brighter_bites/presentation/bloc/auth/auth_bloc.dart";
+import "package:brighter_bites/services/auth_service.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "package:fluttr_app/presentation/bloc/auth/auth_bloc.dart";
-import "package:fluttr_app/presentation/pages/login.dart";
-import "package:fluttr_app/services/auth_service.dart";
 import "package:flutter/material.dart";
-import 'package:fluttr_app/presentation/pages/add_child.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});

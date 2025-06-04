@@ -1,5 +1,4 @@
-// import 'package:fluttr_app/core/error/exceptions.dart';
-import 'package:fluttr_app/data/models/user_model.dart';
+import 'package:brighter_bites/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract interface class AuthRemoteDataSource {

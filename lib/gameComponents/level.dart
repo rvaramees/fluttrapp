@@ -1,13 +1,12 @@
 import 'dart:async';
 
+import 'package:brighter_bites/gameComponents/checkpoint.dart';
+import 'package:brighter_bites/gameComponents/collision_block.dart';
+import 'package:brighter_bites/gameComponents/fruit.dart';
+import 'package:brighter_bites/gameComponents/player.dart';
+import 'package:brighter_bites/presentation/pages/pixel.dart';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttr_app/gameComponents/checkpoint.dart';
-import 'package:fluttr_app/gameComponents/collision_block.dart';
-import 'package:fluttr_app/gameComponents/fruit.dart';
-import 'package:fluttr_app/gameComponents/player.dart';
-import 'package:fluttr_app/presentation/pages/pixel.dart';
 
 class Level extends World with HasGameRef<PixelGame> {
   late TiledComponent level;

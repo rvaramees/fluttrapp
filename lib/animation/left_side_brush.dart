@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class SideTeethAnimation extends StatefulWidget {
   final bool isLeft;
-  const SideTeethAnimation({Key? key, this.isLeft = false}) : super(key: key);
+  const SideTeethAnimation({super.key, this.isLeft = false});
   @override
   State<SideTeethAnimation> createState() => _SideTeethAnimationState();
 }

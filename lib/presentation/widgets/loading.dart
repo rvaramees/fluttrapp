@@ -1,6 +1,5 @@
+import 'package:brighter_bites/presentation/widgets/horiscrolling.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttr_app/presentation/widgets/horiscrolling.dart';
-import 'package:fluttr_app/presentation/widgets/sprite_sheet.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});

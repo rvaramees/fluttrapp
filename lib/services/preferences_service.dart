@@ -1,6 +1,6 @@
+import 'package:brighter_bites/services/noti_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart'; // For TimeOfDay parsing
-import 'package:fluttr_app/services/noti_services.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class PreferencesService {

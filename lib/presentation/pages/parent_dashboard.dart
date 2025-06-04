@@ -1,15 +1,11 @@
+import 'package:brighter_bites/core/di/injection_container.dart' as di;
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/domain/usecases/child/get_child_usecase.dart';
+import 'package:brighter_bites/presentation/bloc/child/child_bloc.dart';
+import 'package:brighter_bites/presentation/pages/add_child.dart';
+import 'package:brighter_bites/services/firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/core/di/injection_container.dart' as di;
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/domain/usecases/child/get_child_usecase.dart';
-import 'package:fluttr_app/presentation/bloc/auth/auth_bloc.dart';
-import 'package:fluttr_app/presentation/bloc/child/child_bloc.dart';
-import 'package:fluttr_app/presentation/bloc/selected_child/selected_child_bloc.dart';
-import 'package:fluttr_app/presentation/pages/add_child.dart';
-import 'package:fluttr_app/services/firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ParentDashboard extends StatefulWidget {
   const ParentDashboard({super.key});
@@ -23,6 +19,233 @@ class _ParentDashboardState extends State<ParentDashboard> {
   final TextEditingController descriptionController = TextEditingController();
   TimeOfDay? selectedTime;
   final FirestoreService firestoreService = FirestoreService();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Parent Dashboard'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/parent_home');
+          },
+        ),
+        actions: [
+          // IconButton(
+          //   icon: const Icon(Icons.logout),
+          //   onPressed: () {
+          //     BlocProvider.of<SelectedChildBloc>(context)
+          //         .add(const ClearSelectedChild());
+          //     BlocProvider.of<AuthBloc>(context)
+          //         .add(const AuthLogoutRequested());
+          //     Navigator.pushReplacementNamed(context, '/login');
+          //   },
+          // ),
+        ],
+      ),
+      body: BlocBuilder<ChildBloc, ChildState>(
+        builder: (context, state) {
+          if (state is ChildLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ChildLoaded) {
+            return ListView.builder(
+              itemCount: state.children.length,
+              itemBuilder: (context, index) {
+                final child = state.children[index];
+                return Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          child.name,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text('Age: ${child.age}'),
+                        Text('Level: ${child.level}'),
+                        Text('Exp: ${child.exp}'),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            _openChildDetails(child.childId);
+                            // Navigate to child's page (not shown here)
+                          },
+                          child: const Text('View Details'),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          } else if (state is ChildError) {
+            return Center(child: Text('Error: ${state.message}'));
+          } else {
+            return const Center(child: Text('No children found.'));
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddChildScreen()),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _openChildDetails(String childId) async {
+    final GetChildUseCase getChildUseCase =
+        di.sl<GetChildUseCase>(); // Get the use case
+
+    final result = await getChildUseCase(GetChildParams(childId: childId));
+
+    result.fold(
+      (failure) {
+        // Handle error (e.g., show a snackbar)
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content:
+                  Text('Error fetching child details: ${failure.message}')),
+        );
+      },
+      (child) {
+        // Successfully fetched the child: Show the dialog
+        _showChildDetailsDialog(child);
+      },
+    );
+  }
+
+  void _showChildDetailsDialog(Child child) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Child Details'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Align text to the left
+          children: [
+            Text('Name: ${child.name}'),
+            Text('Age: ${child.age}'),
+            Text(
+                'Level: ${child.level ?? "N/A"}'), // Handle null dentalProfileId
+            Text('Exp: ${child.exp ?? "N/A"}'),
+            Text(
+                'Brushing Time: ${child.preferences['morning']}   ${child.preferences['evening']}'),
+            // Add more child details here as needed
+          ],
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              // Handle any action when the button is pressed
+              _openHabitBox(child.childId, null);
+            },
+            child: const Text('Add New Habit'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openHabitBox(String childId, String? habitId) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Add a new habit'),
+              SizedBox(height: 10),
+              TextField(
+                controller: textcontroller,
+                decoration: InputDecoration(
+                  hintText: 'Enter habit',
+                ),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration: InputDecoration(
+                  hintText: 'Enter description',
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () async {
+                  final TimeOfDay? picked = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                  );
+                  if (picked != null) {
+                    setState(() {
+                      selectedTime = picked;
+                    });
+                  }
+                },
+                child: Text(
+                  selectedTime == null
+                      ? 'Select Time'
+                      : 'Selected Time: ${selectedTime!.format(context)}',
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              if (selectedTime == null) {
+                // Show an error message if time is not selected
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Please select a time')),
+                );
+                return;
+              }
+              final timeString = selectedTime!.format(context);
+              if (habitId != null) {
+                firestoreService.updateHabit(
+                  childId,
+                  habitId,
+                  textcontroller.text,
+                  timeString,
+                  descriptionController.text,
+                );
+              } else {
+                firestoreService.addHabit(
+                  childId,
+                  textcontroller.text,
+                  timeString,
+                  descriptionController.text,
+                );
+              }
+              textcontroller.clear();
+              descriptionController.clear();
+              Navigator.pop(context);
+            },
+            child: habitId != null ? Text('Update Habit') : Text('Add Habit'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 //   String? parentId;
 //   String? childId;
 //   String? parentName;
@@ -269,228 +492,3 @@ class _ParentDashboardState extends State<ParentDashboard> {
 //   }
 // }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Parent Dashboard'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/parent_home');
-          },
-        ),
-        actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.logout),
-          //   onPressed: () {
-          //     BlocProvider.of<SelectedChildBloc>(context)
-          //         .add(const ClearSelectedChild());
-          //     BlocProvider.of<AuthBloc>(context)
-          //         .add(const AuthLogoutRequested());
-          //     Navigator.pushReplacementNamed(context, '/login');
-          //   },
-          // ),
-        ],
-      ),
-      body: BlocBuilder<ChildBloc, ChildState>(
-        builder: (context, state) {
-          if (state is ChildLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is ChildLoaded) {
-            return ListView.builder(
-              itemCount: state.children.length,
-              itemBuilder: (context, index) {
-                final child = state.children[index];
-                return Card(
-                  margin: const EdgeInsets.all(8.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          child.name,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 8),
-                        Text('Age: ${child.age}'),
-                        Text('Level: ${child.level}'),
-                        Text('Exp: ${child.exp}'),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {
-                            _openChildDetails(child.childId);
-                            // Navigate to child's page (not shown here)
-                          },
-                          child: const Text('View Details'),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          } else if (state is ChildError) {
-            return Center(child: Text('Error: ${state.message}'));
-          } else {
-            return const Center(child: Text('No children found.'));
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddChildScreen()),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  void _openChildDetails(String childId) async {
-    final GetChildUseCase getChildUseCase =
-        di.sl<GetChildUseCase>(); // Get the use case
-
-    final result = await getChildUseCase(GetChildParams(childId: childId));
-
-    result.fold(
-      (failure) {
-        // Handle error (e.g., show a snackbar)
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content:
-                  Text('Error fetching child details: ${failure.message}')),
-        );
-      },
-      (child) {
-        // Successfully fetched the child: Show the dialog
-        _showChildDetailsDialog(child);
-      },
-    );
-  }
-
-  void _showChildDetailsDialog(Child child) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Child Details'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align text to the left
-          children: [
-            Text('Name: ${child.name}'),
-            Text('Age: ${child.age}'),
-            Text(
-                'Level: ${child.level ?? "N/A"}'), // Handle null dentalProfileId
-            Text('Exp: ${child.exp ?? "N/A"}'),
-            Text(
-                'Brushing Time: ${child.preferences['morning']}   ${child.preferences['evening']}'),
-            // Add more child details here as needed
-          ],
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              // Handle any action when the button is pressed
-              _openHabitBox(child.childId, null);
-            },
-            child: const Text('Add New Habit'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _openHabitBox(String childId, String? habitId) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Add a new habit'),
-              SizedBox(height: 10),
-              TextField(
-                controller: textcontroller,
-                decoration: InputDecoration(
-                  hintText: 'Enter habit',
-                ),
-              ),
-              TextField(
-                controller: descriptionController,
-                decoration: InputDecoration(
-                  hintText: 'Enter description',
-                ),
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () async {
-                  final TimeOfDay? picked = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.now(),
-                  );
-                  if (picked != null) {
-                    setState(() {
-                      selectedTime = picked;
-                    });
-                  }
-                },
-                child: Text(
-                  selectedTime == null
-                      ? 'Select Time'
-                      : 'Selected Time: ${selectedTime!.format(context)}',
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              if (selectedTime == null) {
-                // Show an error message if time is not selected
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Please select a time')),
-                );
-                return;
-              }
-              final timeString = selectedTime!.format(context);
-              if (habitId != null) {
-                firestoreService.updateHabit(
-                  childId,
-                  habitId,
-                  textcontroller.text,
-                  timeString,
-                  descriptionController.text,
-                );
-              } else {
-                firestoreService.addHabit(
-                  childId,
-                  textcontroller.text,
-                  timeString,
-                  descriptionController.text,
-                );
-              }
-              textcontroller.clear();
-              descriptionController.clear();
-              Navigator.pop(context);
-            },
-            child: habitId != null ? Text('Update Habit') : Text('Add Habit'),
-          ),
-        ],
-      ),
-    );
-  }
-}

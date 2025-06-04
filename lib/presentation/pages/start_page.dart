@@ -1,25 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/presentation/bloc/child/child_bloc.dart';
+import 'package:brighter_bites/presentation/bloc/selected_child/selected_child_bloc.dart';
+import 'package:brighter_bites/presentation/pages/home.dart';
+import 'package:brighter_bites/presentation/pages/login.dart';
+import 'package:brighter_bites/presentation/pages/parent_dashboard.dart';
+import 'package:brighter_bites/presentation/widgets/play_button.dart';
+import 'package:brighter_bites/presentation/widgets/start_bg.dart';
+import 'package:brighter_bites/services/auth_service.dart';
+import 'package:brighter_bites/services/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/presentation/bloc/child/child_bloc.dart';
-import 'package:fluttr_app/presentation/bloc/selected_child/selected_child_bloc.dart';
-import 'package:fluttr_app/presentation/pages/home.dart';
-import 'package:fluttr_app/presentation/pages/parent_dashboard.dart';
-import 'package:fluttr_app/services/firestore.dart';
-import 'package:fluttr_app/presentation/widgets/play_button.dart';
-import 'package:fluttr_app/presentation/widgets/scrolling_background.dart';
-// import 'package:fluttr_app/main.dart';
 import 'package:get/get.dart';
-import 'package:fluttr_app/presentation/pages/start_brushing.dart';
-import 'package:fluttr_app/presentation/pages/daily_challenges.dart';
-import 'package:fluttr_app/presentation/pages/track_progress.dart';
-import 'package:fluttr_app/presentation/pages/edu_videos.dart';
-import 'package:fluttr_app/services/auth_service.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttr_app/presentation/widgets/custom_card.dart';
-import 'package:fluttr_app/presentation/pages/login.dart'; // Import the Login class
+import 'package:shared_preferences/shared_preferences.dart'; // Import the Login class
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -128,11 +120,11 @@ class _StartPageState extends State<StartPage> {
       return const Center(child: CircularProgressIndicator());
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Brighter Bites"),
-        backgroundColor: Colors.blueGrey,
-        actions: [],
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Brighter Bites"),
+      //   backgroundColor: Colors.blueGrey,
+      //   actions: [],
+      // ),
       body: BlocBuilder<ChildBloc, ChildState>(
         builder: (context, childState) {
           if (childState is ChildLoaded) {
@@ -147,22 +139,22 @@ class _StartPageState extends State<StartPage> {
 
             return Stack(
               children: [
-                ScrollingBackground(),
+                StartBg(),
                 Container(
                   child: Column(children: [
                     SizedBox(
-                      height: 50,
+                      height: 100,
                     ),
                     SizedBox(
-                      height: 400,
-                      width: 400,
+                      height: 350,
+                      width: 350,
                       child: Image.asset(
                         'assets/logo2.png',
                         fit: BoxFit.cover,
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(2.0),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -230,79 +222,6 @@ class _StartPageState extends State<StartPage> {
       ),
     );
   }
-
-  //     BlocBuilder<ChildBloc, ChildState>(
-  //       builder: (context, childState) {
-  //         if (childState is ChildLoaded) {
-  //           final children = childState.children;
-
-  //           if (children.isEmpty) {
-  //             return const Center(
-  //               child: Text(
-  //                   'No children available. Please add children from the parent dashboard.'),
-  //             );
-  //           }
-  //         }
-  //       Stack(
-  //         children: [
-  //           ScrollingBackground(),
-  //           Container(
-  //             child: Column(
-  //               children: [
-  //                 SizedBox(
-  //                   height: 50,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 400,
-  //                   width: 400,
-  //                   child: Image.asset(
-  //                     'assets/logo2.png',
-  //                     fit: BoxFit.cover,
-  //                   ),
-  //                 ),
-  //                 Padding(
-  //                     padding: const EdgeInsets.all(16.0),
-  //                     child: Center(
-  //                       child: Column(
-  //                         mainAxisAlignment: MainAxisAlignment.center,
-  //                         children: [
-  //                           AnimatedPlayButton(
-  //                             onTap: () {
-  //                               Navigator.push(
-  //                                 context,
-  //                                 MaterialPageRoute(
-  //                                   builder: (context) => Home(),
-  //                                 ),
-  //                               );
-  //                             },
-  //                           )
-  //                         ],
-  //                       ),
-  //                     )),
-  //               ],
-  //             ),
-  //           ),
-  //           ElevatedButton(
-  //             onPressed: () {
-  //               openLoginBox();
-  //             },
-  //             style: ElevatedButton.styleFrom(
-  //               backgroundColor: Colors.white,
-  //               shadowColor: Colors.black,
-  //               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(5),
-  //               ),
-  //             ),
-  //             child: Text(
-  //               'Parent Dashboard',
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   void goToLogin(BuildContext context) {
     Navigator.pushReplacement(

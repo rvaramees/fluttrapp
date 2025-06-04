@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:fluttr_app/presentation/pages/home.dart';
 
 class AnimatedPlayButton extends StatefulWidget {
   final VoidCallback onTap;

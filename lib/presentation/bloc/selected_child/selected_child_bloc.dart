@@ -1,7 +1,7 @@
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/domain/usecases/child/get_child_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-import 'package:fluttr_app/domain/usecases/child/get_child_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'selected_child_event.dart';

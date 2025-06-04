@@ -1,12 +1,11 @@
 
+import 'package:brighter_bites/domain/entities/child.dart';
+import 'package:brighter_bites/domain/usecases/child/add_child_usecase.dart';
+import 'package:brighter_bites/domain/usecases/child/delete_child_usecase.dart';
+import 'package:brighter_bites/domain/usecases/child/get_children_usecase.dart';
+import 'package:brighter_bites/domain/usecases/child/update_child_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
-
-import 'package:fluttr_app/domain/usecases/child/add_child_usecase.dart';
-import 'package:fluttr_app/domain/usecases/child/delete_child_usecase.dart';
-import 'package:fluttr_app/domain/usecases/child/get_children_usecase.dart';
-import 'package:fluttr_app/domain/usecases/child/update_child_usecase.dart';
 
 part 'child_event.dart';
 part 'child_state.dart';

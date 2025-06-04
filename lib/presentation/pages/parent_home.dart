@@ -1,9 +1,8 @@
+import 'package:brighter_bites/presentation/bloc/auth/auth_bloc.dart';
+import 'package:brighter_bites/presentation/bloc/selected_child/selected_child_bloc.dart';
+import 'package:brighter_bites/presentation/widgets/horiscrolling.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/presentation/bloc/auth/auth_bloc.dart';
-import 'package:fluttr_app/presentation/bloc/selected_child/selected_child_bloc.dart';
-import 'package:fluttr_app/presentation/widgets/horiscrolling.dart';
 
 class ParentHome extends StatefulWidget {
   const ParentHome({super.key});

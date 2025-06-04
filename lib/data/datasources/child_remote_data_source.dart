@@ -1,5 +1,5 @@
+import 'package:brighter_bites/data/models/child_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttr_app/data/models/child_model.dart';
 
 abstract class ChildRemoteDataSource {
   Future<ChildModel> addChild(ChildModel child);

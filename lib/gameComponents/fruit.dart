@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:brighter_bites/gameComponents/customHitbox.dart';
+import 'package:brighter_bites/presentation/pages/pixel.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:fluttr_app/gameComponents/customHitbox.dart';
-import 'package:fluttr_app/presentation/pages/pixel.dart';
 
 class Fruit extends SpriteAnimationComponent
     with HasGameRef<PixelGame>, CollisionCallbacks {

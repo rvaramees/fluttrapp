@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:brighter_bites/presentation/pages/pixel.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:fluttr_app/presentation/pages/pixel.dart';
 import 'player.dart';
 
 class Checkpoint extends SpriteAnimationComponent

@@ -1,12 +1,12 @@
+import 'package:brighter_bites/main.dart';
+import 'package:brighter_bites/presentation/bloc/auth/auth_bloc.dart';
+import 'package:brighter_bites/presentation/pages/home.dart';
+import 'package:brighter_bites/presentation/pages/signup.dart';
+import 'package:brighter_bites/presentation/pages/start_page.dart';
+import 'package:brighter_bites/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttr_app/main.dart';
-import 'package:fluttr_app/presentation/bloc/auth/auth_bloc.dart';
-import 'package:fluttr_app/presentation/pages/signup.dart';
-import 'package:fluttr_app/presentation/pages/start_page.dart';
-import 'package:fluttr_app/services/auth_service.dart';
-import 'package:fluttr_app/presentation/pages/home.dart';
 
 class LoginPage extends StatefulWidget {
   @override

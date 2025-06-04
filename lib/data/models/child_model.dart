@@ -1,4 +1,6 @@
-import 'package:fluttr_app/domain/entities/child.dart';
+
+
+import 'package:brighter_bites/domain/entities/child.dart';
 
 class ChildModel {
   final String childId;

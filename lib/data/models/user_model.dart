@@ -1,4 +1,4 @@
-import 'package:fluttr_app/domain/entities/user.dart';
+import 'package:brighter_bites/domain/entities/user.dart';
 
 class UserModel {
   final String id;

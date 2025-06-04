@@ -93,15 +93,9 @@
 #   # see https://flutter.dev/to/font-from-package
 #   # https://flutter.dev/to/resolution-aware-images
 #   #       - asset: fonts/Schyler-Italic.ttf
-# flutter_native_splash:
-#   color: "#000000" # Background color of the splash screen
-#   image: 'assets/splash.png' # Path to your splash screen image
-#   android: true
-#   ios: true
-#   web: true
 
-name: fluttr_app
-description: "A new Flutter project."
+name: brighter_bites
+description: "An engaging and educational game designed to teach children the importance of oral hygiene through fun and interactive gameplay."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -112,6 +106,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  
   cupertino_icons: ^1.0.8
   firebase_core: ^3.12.0
   firebase_analytics: ^11.4.3
@@ -124,8 +121,8 @@ dependencies:
   logging: ^1.3.0
   timezone: ^0.10.0
   flutter_timezone: ^4.1.0
-  intl: ^0.20.2
-  table_calendar: ^3.2.0
+  intl: ^0.19.0
+  table_calendar: ^3.1.3
   firebase_auth: ^5.5.1
   shared_preferences: ^2.5.2
   permission_handler: ^11.4.0
@@ -167,10 +164,13 @@ flutter:
     - assets/splash.png
     - assets/toothbrush_animation.json
     - assets/teeth.png
+    - assets/tree.png
     - assets/brushh.png
     - assets/home_bg.png
     - assets/Logo.png
+    - assets/bush.png
     - assets/logo2.png
+    - assets/start_bg.png
     - assets/play_button.png 
     - assets/Cloud_bg.png
     - assets/sounds/The_Gardens_Remix.mp3
@@ -188,3 +188,7 @@ flutter:
     - assets/images/Background/
     - assets/images/Items/Checkpoints/Checkpoint/
     - assets/audio/
+    - assets/animations/
+
+
+

@@ -1,6 +1,6 @@
+import 'package:brighter_bites/core/error/failure.dart';
+import 'package:brighter_bites/domain/entities/child.dart';
 import 'package:dartz/dartz.dart';
-import 'package:fluttr_app/core/error/failure.dart';
-import 'package:fluttr_app/domain/entities/child.dart';
 
 abstract class ChildRepository {
   Future<Either<Failure, Child>> addChild(Child child);
